@@ -4,7 +4,6 @@ const cooldown = 60000
 
 export async function all(m) {
 	if (!m.message) return
-	if (m.fromMe || db.data.datas.rowner.map(([number]) => number).map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || db.data.datas.owner.map(([number]) => number).map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)) return
 	if (!db.data.users[m.sender]) return !1
 	if (db.data.users[m.sender].banned) return
 
