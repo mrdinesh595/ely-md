@@ -1,0 +1,24 @@
+version: "7.2.7"
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - /home/arasea/el:/code
+      - /home/arasea/el/sessions:/code/sessions
+      - logvolume01:/var/log
+    deploy:
+      resources:
+        limits:
+          memory: 10G
+    environment:
+      - NODE_OPTIONS=--max_old_space_size=4096
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+volumes:
+  logvolume01: {}
