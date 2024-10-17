@@ -189,7 +189,6 @@ global.rpg = {
 	}
 }
 
-
 let file = fileURLToPath(import.meta.url)
 watchFile(file, () => {
 	unwatchFile(file)
