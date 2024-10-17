@@ -772,6 +772,8 @@ export async function handler(chatUpdate) {
 						chat.pdf = false
 					if (!('game' in chat))
 						chat.game = false
+					if (!('rpg' in chat))
+						chat.rpg = false
 					if (!('simi' in chat))
 						chat.simi = false
 					if (!('lastsimi' in chat))
@@ -815,6 +817,7 @@ export async function handler(chatUpdate) {
 					nsfw: false,
 					pdf: false,
 					game: false,
+					rpg: false,
 					simi: false,
 					lastsimi: false,
 					viewonce: false,
@@ -1102,12 +1105,12 @@ export async function handler(chatUpdate) {
 					fail('nsfw', m, this)
 					continue
 				}
-				// if (plugin.game) {
-				// 	fail('maintenance', m, this)
-				// 	continue
-				// }
 				if (plugin.game && m.isGroup && !db.data.chats[m.chat].game) {
 					fail('game', m, this)
+					continue
+				}
+				if (plugin.rpg && m.isGroup && !db.data.chats[m.chat].rpg) {
+					fail('rpg', m, this)
 					continue
 				}
 				if (plugin.group && !m.isGroup) { // Group Only
@@ -1333,6 +1336,7 @@ global.dfail = (type, m, conn) => {
 		admin: `*「ADMIN GROUP ONLY」*`,
 		nsfw: `[ *NSFW GAK AKTIF* ]`,
 		game: '```「 aktifkan mode game! 」```',
+		rpg: '```「 aktifkan mode rpg! 」```',
 		botAdmin: `*「BOT HARUS JADI ADMIN」*`,
 		unreg: 'Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*#daftar nama.umur*\n\nContoh: *#daftar Manusia.16*',
 		restrict: 'Fitur ini di *disable*!',
