@@ -17,4 +17,6 @@ handler.menufun = ['tarik <jumlah>']
 handler.tagsfun = ['rpg']
 handler.command = /^((t|n)arik(all)?)$/i
 
+handler.rpg = true
+
 export default handler

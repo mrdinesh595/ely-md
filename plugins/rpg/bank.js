@@ -34,4 +34,6 @@ handler.menufun = ['bank <opts>']
 handler.tagsfun = ['rpg']
 handler.command = /^(bank|atm)$/i
 
+handler.rpg = true
+
 export default handler
