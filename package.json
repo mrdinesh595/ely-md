@@ -43,7 +43,7 @@
 		"@adiwajshing/keyed-db": "^0.2.4",
 		"@bochilteam/scraper": "^5.0.1",
 		"@bochilteam/scraper-sosmed": "^1.0.5",
-		"@whiskeysockets/baileys": "^6.7.8",
+		"@whiskeysockets/baileys": "^6.7.9",
 		"awesome-phonenumber": "^6.9.0",
 		"axios": "^1.7.2",
 		"brainly-scraper-v2": "^2.2.8",
