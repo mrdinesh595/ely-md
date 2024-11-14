@@ -97,7 +97,8 @@ apt install -y nodejs gcc g++ make
 git clone https://github.com/arasea2/ely-md
 cd ely-md
 npm install
-npm update
+npm install cheerio@1.0.0-rc.12
+npm start
 ```
 
 ---------
@@ -113,7 +114,8 @@ npm update
 git clone https://github.com/arasea2/ely-md
 cd ely-md
 npm install
-npm update
+npm install cheerio@1.0.0-rc.12
+npm start
 ```
 
 ---------
@@ -123,9 +125,6 @@ npm update
 
 ### `--pairing`
 Link device via pairing
-
-### `--mobile`
-Link device via mobile captcha (blm tes, rawan ban katanya)
 
 ### `--self`
 Mode self (gak ada yang bisa gunakan, kecuali nomor bot dan owner)
