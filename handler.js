@@ -16,7 +16,6 @@ import { smsg } from './lib/simple.js'
 const { getContentType } = (await import('@whiskeysockets/baileys')).default
 
 const isNumber = x => typeof x === 'number' && !isNaN(x)
-const isLinux = (os.platform() === 'win32') ? false : true
 /**
  * Handle messages upsert
  * @this {import('./lib/connection').Socket}
@@ -48,10 +47,7 @@ export async function handler(chatUpdate) {
 						user.exp = 0
 					if (!isNumber(user.limit))
 						user.limit = 120
-					if (!isNumber(user.lastclaim))
-						user.lastclaim = 0
-					if (!isNumber(user.lastclaimlimit))
-						user.lastclaimlimit = 0
+					if (!isNumber(user.lastclaim)) user.lastclaim = 0
 					if (!('registered' in user))
 						user.registered = false
 					if (!('viewstatus' in user))
@@ -146,50 +142,34 @@ export async function handler(chatUpdate) {
 						user.horse = 0
 					if (!isNumber(user.horseexp))
 						user.horseexp = 0
-					if (!isNumber(user.horselastfeed))
-						user.horselastfeed = 0
 					if (!isNumber(user.cat))
 						user.cat = 0
 					if (!isNumber(user.catexp))
 						user.catexp = 0
-					if (!isNumber(user.catlastfeed))
-						user.catlastfeed = 0
 					if (!isNumber(user.fox))
 						user.fox = 0
 					if (!isNumber(user.foxexp))
 						user.foxexp = 0
-					if (!isNumber(user.foxlastfeed))
-						user.foxlastfeed = 0
 					if (!isNumber(user.dog))
 						user.dog = 0
 					if (!isNumber(user.dogexp))
 						user.dogexp = 0
-					if (!isNumber(user.doglastfeed))
-						user.doglastfeed = 0
 					if (!isNumber(user.wolf))
 						user.wolf = 0
 					if (!isNumber(user.wolfexp))
 						user.wolfexp = 0
-					if (!isNumber(user.wolflastfeed))
-						user.wolflastfeed = 0
 					if (!isNumber(user.centaur))
 						user.centaur = 0
 					if (!isNumber(user.centaurexp))
 						user.centaurexp = 0
-					if (!isNumber(user.centaurlastfeed))
-						user.centaurlastfeed = 0
 					if (!isNumber(user.phoenix))
 						user.phoenix = 0
 					if (!isNumber(user.phoenixexp))
 						user.phoenixexp = 0
-					if (!isNumber(user.phoenixlastfeed))
-						user.phoenixlastfeed = 0
 					if (!isNumber(user.dragon))
 						user.dragon = 0
 					if (!isNumber(user.dragonexp))
 						user.dragonexp = 0
-					if (!isNumber(user.dragonlastfeed))
-						user.dragonlastfeed = 0
 					if (!isNumber(user.horselvl))
 						user.horselvl = 0
 					if (!isNumber(user.catlvl))
@@ -263,10 +243,10 @@ export async function handler(chatUpdate) {
 					if (!isNumber(user.bowdurability))
 						user.bowdurability = 0
 
+					if (!isNumber(user.lastclaim))
+						user.lastclaim = 0
 					if (!isNumber(user.lastadventure))
 						user.lastadventure = 0
-					if (!isNumber(user.lastwork))
-						user.lastwork = 0
 					if (!isNumber(user.lastfishing))
 						user.lastfishing = 0
 					if (!isNumber(user.lastdungeon))
@@ -281,8 +261,6 @@ export async function handler(chatUpdate) {
 						user.lastlumber = 0
 					if (!isNumber(user.lastngojek))
 						user.lastngojek = 0
-					if (!isNumber(user.lastjb))
-						user.lastjb = 0
 					if (!isNumber(user.lastweekly))
 						user.lastweekly = 0
 					if (!isNumber(user.lastmonthly))
@@ -301,8 +279,6 @@ export async function handler(chatUpdate) {
 						user.craftcount = 0
 					if (!isNumber(user.adventurecount))
 						user.adventurecount = 0
-					if (!isNumber(user.workcount))
-						user.workcount = 0
 					if (!isNumber(user.mancingcount))
 						user.mancingcount = 0
 					if (!isNumber(user.lumbercount))
@@ -436,18 +412,6 @@ export async function handler(chatUpdate) {
 						user.tambang = 0
 					if (!isNumber(user.pelabuhan))
 						user.pelabuhan = 0
-					if (!('rumahsakitname' in user))
-						user.rumahsakitname = ''
-					if (!('restoranname' in user))
-						user.restoranname = ''
-					if (!('pabrikname' in user))
-						user.pabrikname = ''
-					if (!('tambangname' in user))
-						user.tambangname = ''
-					if (!('pelabuhanname' in user))
-						user.pelabuhanname = ''
-					if (!('openaitxt' in user))
-						user.openaitxt = []
 					if (!isNumber(user.rumahsakitexp))
 						user.rumahsakitexp = 0
 					if (!isNumber(user.restoranexp))
@@ -472,16 +436,23 @@ export async function handler(chatUpdate) {
 						user.expired = 0
 					if (!isNumber(user.spamcount))
 						user.spamcount = 0
-					if (!isNumber(user.pc))
-						user.pc = 0
-					if (!('saldogc' in user))
-						user.saldogc = { '0@g.us': { saldo: 0, recharge: [], claims: [] } }
 
+					if (!('rumahsakitname' in user))
+						user.rumahsakitname = ''
+					if (!('restoranname' in user))
+						user.restoranname = ''
+					if (!('pabrikname' in user))
+						user.pabrikname = ''
+					if (!('tambangname' in user))
+						user.tambangname = ''
+					if (!('pelabuhanname' in user))
+						user.pelabuhanname = ''
+					if (!('openaitxt' in user))
+						user.openaitxt = []
 				} else db.data.users[m.sender] = {
 					exp: 0,
 					limit: 120,
 					lastclaim: 0,
-					lastclaimlimit: 0,
 					registered: false,
 					viewstatus: false,
 					name: m.name,
@@ -530,28 +501,20 @@ export async function handler(chatUpdate) {
 
 					horse: 0,
 					horseexp: 0,
-					horselastfeed: 0,
 					cat: 0,
 					catexp: 0,
-					catlastfeed: 0,
 					fox: 0,
 					foxexp: 0,
-					foxlastfeed: 0,
 					dog: 0,
 					dogexp: 0,
-					doglastfeed: 0,
 					wolf: 0,
 					wolfexp: 0,
-					wolflastfeed: 0,
 					centaur: 0,
 					centaurexp: 0,
-					centaurlastfeed: 0,
 					phoenix: 0,
 					phoenixexp: 0,
-					phoenixlastfeed: 0,
 					dragon: 0,
 					dragonexp: 0,
-					dragonlastfeed: 0,
 					horselvl: 0,
 					catlvl: 0,
 					foxlvl: 0,
@@ -590,14 +553,13 @@ export async function handler(chatUpdate) {
 					bow: 0,
 					bowdurability: 0,
 
+					lastclaim: 0,
 					lastadventure: 0,
-					lastwork: 0,
 					lastfishing: 0,
 					lastdungeon: 0,
 					lastduel: 0,
 					lastmining: 0,
 					lasthunt: 0,
-					lastjb: 0,
 					lastlumber: 0,
 					lastngojek: 0,
 					lastweekly: 0,
@@ -609,7 +571,6 @@ export async function handler(chatUpdate) {
 					masakcount: 0,
 					craftcount: 0,
 					adventurecount: 0,
-					workcount: 0,
 					mancingcount: 0,
 					lumbercount: 0,
 					ngojekcount: 0,
@@ -680,12 +641,6 @@ export async function handler(chatUpdate) {
 					pabrik: 0,
 					tambang: 0,
 					pelabuhan: 0,
-					rumahsakitname: '',
-					restoranname: '',
-					pabrikname: '',
-					tambangname: '',
-					pelabuhanname: '',
-					openaitxt: [],
 					rumahsakitexp: 0,
 					restoranexp: 0,
 					pabrikexp: 0,
@@ -698,8 +653,13 @@ export async function handler(chatUpdate) {
 					pelabuhanlvl: 0,
 					expired: 0,
 					spamcount: 0,
-					pc: 0,
-					saldogc: { '0@g.us': { saldo: 0, recharge: [], claims: [] } }
+
+					rumahsakitname: '',
+					restoranname: '',
+					pabrikname: '',
+					tambangname: '',
+					pelabuhanname: '',
+					openaitxt: [],
 				}
 				let akinator = db.data.users[m.sender].akinator
 				if (typeof akinator !== 'object')
@@ -749,7 +709,7 @@ export async function handler(chatUpdate) {
 					if (!('welcome' in chat))
 						chat.welcome = false
 					if (!('detect' in chat))
-						chat.detect = true
+						chat.detect = false
 					if (!('sWelcome' in chat))
 						chat.sWelcome = ''
 					if (!('sBye' in chat))
@@ -764,6 +724,18 @@ export async function handler(chatUpdate) {
 						chat.delete = true
 					if (!('antiLink' in chat))
 						chat.antiLink = false
+					if (!('antiSticker' in chat))
+						chat.antiSticker = false
+					if (!('antiToxic' in chat))
+						chat.antiToxic = false
+					if (!('antiUncheck' in chat))
+						chat.antiUncheck = false
+					if (!('antiLinkKick' in chat))
+						chat.antiLinkKick = false
+					if (!('adminonly' in chat))
+						chat.adminonly = false
+					if (!('owneronly' in chat))
+						chat.owneronly = false
 					if (!('antivirus' in chat))
 						chat.antivirus = false
 					if (!('nsfw' in chat))
@@ -772,22 +744,16 @@ export async function handler(chatUpdate) {
 						chat.pdf = false
 					if (!('game' in chat))
 						chat.game = false
-					if (!('rpg' in chat))
-						chat.rpg = false
 					if (!('simi' in chat))
 						chat.simi = false
 					if (!('lastsimi' in chat))
 						chat.lastsimi = false
 					if (!('viewonce' in chat))
 						chat.viewonce = false
-					if (!('antiToxic' in chat))
-						chat.antiToxic = false
 					if (!('autolevelup' in chat))
 						chat.autolevelup = false
 					if (!('autoai' in chat))
 						chat.autoai = false
-					if (!('newstoram' in chat))
-						chat.newstoram = false
 					if (!isNumber(chat.joindate))
 						chat.joindate = 0
 					if (!isNumber(chat.joincd))
@@ -805,7 +771,7 @@ export async function handler(chatUpdate) {
 					isBanned: false,
 					permaBan: false,
 					welcome: false,
-					detect: true,
+					detect: false,
 					sWelcome: '',
 					sBye: '',
 					sPromote: '',
@@ -813,18 +779,21 @@ export async function handler(chatUpdate) {
 					openaitxt: [],
 					delete: true,
 					antiLink: false,
+					antiSticker: false,
+					antiToxic: false,
+					antiUncheck: false,
+					antiLinkKick: false,
+					adminonly: false,
+					owneronly: false,
 					antivirus: false,
 					nsfw: false,
 					pdf: false,
 					game: false,
-					rpg: false,
 					simi: false,
 					lastsimi: false,
 					viewonce: false,
-					antiToxic: false,
 					autolevelup: false,
 					autoai: false,
-					newstoram: false,
 					joindate: 0,
 					joincd: 0,
 					expired: 0,
@@ -865,13 +834,31 @@ export async function handler(chatUpdate) {
 					step: null,
 					soal: null
 				}
+				let mutepinkey = db.data.chats[m.chat].mutepinkey
+				if (typeof mutepinkey !== 'object')
+					db.data.chats[m.chat].mutepinkey = {}
+				if (mutepinkey) {
+					if (!('remoteJid' in mutepinkey))
+						mutepinkey.remoteJid = ''
+					if (!('fromMe' in mutepinkey))
+						mutepinkey.fromMe = false
+					if (!('id' in mutepinkey))
+						mutepinkey.id = ''
+				} else db.data.chats[m.chat].mutepinkey = {
+					remoteJid: '',
+					fromMe: false,
+					id: ''
+				}
 			}
 			let settings = db.data.settings[this.user.jid]
 			if (typeof settings !== 'object') db.data.settings[this.user.jid] = {}
 			if (settings) {
-				if (!('self' in settings)) settings.self = false
-				if (!('autoread' in settings)) settings.autoread = false
-				if (!('restrict' in settings)) settings.restrict = false
+				if (!('self' in settings))
+					settings.self = false
+				if (!('autoread' in settings))
+					settings.autoread = false
+				if (!('restrict' in settings))
+					settings.restrict = false
 			} else db.data.settings[this.user.jid] = {
 				self: false,
 				autoread: false,
@@ -880,34 +867,62 @@ export async function handler(chatUpdate) {
 			let datas = db.data.datas
 			if (typeof datas !== 'object') db.data.datas = {}
 			if (datas) {
-				if (!('maingroupname' in datas)) datas.maingroupname = ''
-				if (!('aiprofile' in datas)) datas.aiprofile = ''
-				if (!('packname' in datas)) datas.packname = ''
-				if (!('author' in datas)) datas.author = ''
-				if (!('linkgc' in datas)) datas.linkgc = ''
-				if (!('idcai' in datas)) datas.idcai = ''
-				if (!('spamcountreset' in datas)) datas.spamcountreset = 0
-				if (!('spamcountgcreset' in datas)) datas.spamcountgcreset = 0
-				if (!('spamlistmsg' in datas)) datas.spamlistmsg = null
-				if (!('spamlistgcmsg' in datas)) datas.spamlistgcmsg = null
-				if (!('anticall' in datas)) datas.anticall = false
-				if (!('autoai' in datas)) datas.autoai = false
-				if (!('teksdonasi' in datas)) datas.teksdonasi = ''
-				if (!('tekssewa' in datas)) datas.tekssewa = ''
-				if (!('teksjadibot' in datas)) datas.teksjadibot = ''
-				if (!('tekstopup' in datas)) datas.tekstopup = ''
-				if (!('linkgc' in datas)) datas.linkgc = ''
-				if (!('prems' in datas)) datas.prems = [{ user: '', date: 0, isjoin: false }]
-				if (!('api' in datas)) datas.api = {}
-				if (!('rowner' in datas)) datas.rowner = []
-				if (!('owner' in datas)) datas.owner = []
-				if (!('store' in datas)) datas.store = []
-				if (!('storestatus' in datas)) datas.storestatus = {}
-				if (!('menfess' in datas)) datas.menfess = {}
-				if (!('listgc' in datas)) datas.listgc = []
-				if (!('openaikey' in datas)) datas.openaikey = []
-				if (!('menfesschat' in datas)) datas.menfesschat = {}
-				if (!('menfesschatcd' in datas)) datas.menfesschatcd = 0
+				if (!('maingroupname' in datas))
+					datas.maingroupname = ''
+				if (!('aiprofile' in datas))
+					datas.aiprofile = ''
+				if (!('packname' in datas))
+					datas.packname = ''
+				if (!('author' in datas))
+					datas.author = ''
+				if (!('linkgc' in datas))
+					datas.linkgc = ''
+				if (!('idcai' in datas))
+					datas.idcai = ''
+				if (!('spamcountreset' in datas))
+					datas.spamcountreset = 0
+				if (!('spamcountgcreset' in datas))
+					datas.spamcountgcreset = 0
+				if (!('spamlistmsg' in datas))
+					datas.spamlistmsg = null
+				if (!('spamlistgcmsg' in datas))
+					datas.spamlistgcmsg = null
+				if (!('anticall' in datas))
+					datas.anticall = false
+				if (!('autoai' in datas))
+					datas.autoai = false
+				if (!('teksdonasi' in datas))
+					datas.teksdonasi = ''
+				if (!('tekssewa' in datas))
+					datas.tekssewa = ''
+				if (!('teksjadibot' in datas))
+					datas.teksjadibot = ''
+				if (!('tekstopup' in datas))
+					datas.tekstopup = ''
+				if (!('linkgc' in datas))
+					datas.linkgc = ''
+				if (!('prems' in datas))
+					datas.prems = [{ user: '', date: 0 }]
+				if (!('api' in datas))
+					datas.api = {}
+				if (!('rowner' in datas))
+					datas.rowner = []
+				if (!('owner' in datas))
+					datas.owner = []
+				if (!('store' in datas))
+					datas.store = []
+				if (!('storestatus' in datas))
+					datas.storestatus = {}
+				if (!('menfess' in datas))
+					datas.menfess = {}
+				if (!('listgc' in datas))
+					datas.listgc = []
+				if (!('openaikey' in datas))
+					datas.openaikey = []
+				if (!('menfesschat' in datas))
+					datas.menfesschat = {}
+				if (!('menfesschatcd' in datas))
+					datas.menfesschatcd = 0
 			} else db.data.datas = {
 				maingroupname: '',
 				aiprofile: '',
@@ -926,7 +941,7 @@ export async function handler(chatUpdate) {
 				tekssewa: '',
 				teksjadibot: '',
 				tekstopup: '',
-				prems: [{ user: '', date: 0, isjoin: false }],
+				prems: [{ user: '', date: 0 }],
 				api: {},
 				rowner: [],
 				owner: [],
@@ -937,6 +952,21 @@ export async function handler(chatUpdate) {
 				openaikey: [],
 				menfesschat: {},
 				menfesschatcd: 0,
+			}
+			let selfpinkey = db.data.datas.selfpinkey
+			if (typeof selfpinkey !== 'object')
+				db.data.datas.selfpinkey = {}
+			if (selfpinkey) {
+				if (!('remoteJid' in selfpinkey))
+					selfpinkey.remoteJid = ''
+				if (!('fromMe' in selfpinkey))
+					selfpinkey.fromMe = false
+				if (!('id' in selfpinkey))
+					selfpinkey.id = ''
+			} else db.data.datas.selfpinkey = {
+				remoteJid: '',
+				fromMe: false,
+				id: ''
 			}
 		} catch (e) {
 			console.error(e)
@@ -949,12 +979,6 @@ export async function handler(chatUpdate) {
 
 		if (opts['nyimak'])
 			return
-		if (opts['self'] && !isOwner)
-			return
-		if (opts['pconly'] && m.chat.endsWith('g.us'))
-			return
-		if (opts['gconly'] && !m.chat.endsWith('g.us') && !isPrems)
-			return
 		if (opts['swonly'] && m.chat !== 'status@broadcast')
 			return
 		if (typeof m.text !== 'string')
@@ -966,7 +990,7 @@ export async function handler(chatUpdate) {
 			await this.msgqueque.waitQueue(id)
 		}
 
-		if (m.fromMe) return
+		if (m.fromMe && m.isBaileys) return
 		m.exp += Math.ceil(Math.random() * 10)
 
 		let usedPrefix
@@ -979,6 +1003,7 @@ export async function handler(chatUpdate) {
 		const isRAdmin = user?.admin == 'superadmin' || false
 		const isAdmin = isRAdmin || user?.admin == 'admin' || false // Is User Admin?
 		const isBotAdmin = bot?.admin || false // Are you Admin?
+		const isAdminOwner = isAdmin || isOwner
 
 		const ___dirname = path.join(path.dirname(fileURLToPath(import.meta.url)), './plugins')
 		for (let name in plugins) {
@@ -1070,15 +1095,24 @@ export async function handler(chatUpdate) {
 
 				if (!isAccept)
 					continue
-				m.plugin = name.replace(isLinux ? 'plugins/' : 'plugins\\', '')
+				m.plugin = name
 				if (m.chat in db.data.chats || m.sender in db.data.users) {
 					let chat = db.data.chats[m.chat]
 					let user = db.data.users[m.sender]
-					let ubc = isLinux ? 'owner/unbanchat.js' : 'owner\\unbanchat.js'
-					let ubu = isLinux ? 'owner/unbanuser.js' : 'owner\\unbanuser.js'
-					if (m.plugin != ubc && chat?.isBanned)
+					let anti = /_anti(link|virus|uncheck)\.js/.test(m.plugin)
+					if (!/unbanchat/.test(m.plugin) && chat?.isBanned)
 						return // Except this
-					if (m.plugin != ubu && user?.banned)
+					if (!/unbanuser/.test(m.plugin) && user?.banned)
+						return
+					if (!anti && chat?.adminonly && !isAdminOwner)
+						return
+					if (!isROwner && opts['self'] && !anti)
+						return
+					if (opts['pconly'] && m.chat.endsWith('g.us') && !anti)
+						return
+					if (opts['gconly'] && !m.chat.endsWith('g.us') && !isPrems && !/menfess/.test(m.plugin))
+						return
+					if (chat?.owneronly && !isOwner)
 						return
 				}
 				if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Both Owner
@@ -1109,10 +1143,6 @@ export async function handler(chatUpdate) {
 					fail('game', m, this)
 					continue
 				}
-				if (plugin.rpg && m.isGroup && !db.data.chats[m.chat].rpg) {
-					fail('rpg', m, this)
-					continue
-				}
 				if (plugin.group && !m.isGroup) { // Group Only
 					fail('group', m, this)
 					continue
@@ -1139,7 +1169,7 @@ export async function handler(chatUpdate) {
 				else
 					m.exp += xp
 				if (!isPrems && plugin.limit && db.data.users[m.sender].limit < plugin.limit * 1) {
-					this.reply(m.chat, `Limit anda habis, silahkan beli melalui *${usedPrefix}buy* atau *${usedPrefix}claimlimit*`, m)
+					this.reply(m.chat, `Limit anda habis, silahkan beli melalui *${usedPrefix}buy*`, m)
 					continue // Limit habis
 				}
 				if (plugin.level > _user.level) {
@@ -1211,7 +1241,10 @@ export async function handler(chatUpdate) {
 			//auto typing / record
 			if (db.data.chats[m.chat].presence) await this.sendPresenceUpdate(['composing', 'recording'].getRandom(), m.chat)
 		}
-
+		if (opts['queque'] && m.text) {
+			const id = m.id
+			this.msgqueque.unqueue(id)
+		}
 		//console.log(db.data.users[m.sender])
 		let user, stats = db.data.stats
 		if (m) {
@@ -1276,7 +1309,6 @@ export async function participantsUpdate({ id, participants, action }) {
  * @this {import('./lib/connection').Socket}
  * @param {import('@whiskeysockets/baileys').BaileysEventMap<unknown>['groups.update']} groupsUpdate 
  */
-
 export async function groupsUpdate(groupsUpdate) {
 	if (opts['self'])
 		return
@@ -1285,10 +1317,10 @@ export async function groupsUpdate(groupsUpdate) {
 		if (!id) continue
 		let chats = db.data.chats[id], text = ''
 		if (!chats?.detect) continue
-		// if (groupUpdate.desc) text = (chats.sDesc || this.sDesc || Connection.conn.sDesc || '```Description has been changed to```\n@desc').replace('@desc', groupUpdate.desc)
-		// if (groupUpdate.subject) text = (chats.sSubject || this.sSubject || Connection.conn.sSubject || '```Subject has been changed to```\n@subject').replace('@subject', groupUpdate.subject)
-		// if (groupUpdate.icon) text = (chats.sIcon || this.sIcon || Connection.conn.sIcon || '```Icon has been changed to```').replace('@icon', groupUpdate.icon)
-		// if (groupUpdate.revoke) text = (chats.sRevoke || this.sRevoke || Connection.conn.sRevoke || '```Group link has been changed to```\n@revoke').replace('@revoke', groupUpdate.revoke)
+		if (groupUpdate.desc) text = (chats.sDesc || this.sDesc || Connection.conn.sDesc || '```Description has been changed to```\n@desc').replace('@desc', groupUpdate.desc)
+		if (groupUpdate.subject) text = (chats.sSubject || this.sSubject || Connection.conn.sSubject || '```Subject has been changed to```\n@subject').replace('@subject', groupUpdate.subject)
+		if (groupUpdate.icon) text = (chats.sIcon || this.sIcon || Connection.conn.sIcon || '```Icon has been changed to```').replace('@icon', groupUpdate.icon)
+		if (groupUpdate.revoke) text = (chats.sRevoke || this.sRevoke || Connection.conn.sRevoke || '```Group link has been changed to```\n@revoke').replace('@revoke', groupUpdate.revoke)
 		if (!text) continue
 		await this.sendMessage(id, { text, mentions: this.parseMention(text) })
 	}
@@ -1316,7 +1348,6 @@ export async function deleteUpdate(message) {
 			}
 
 			const participant = msg.participant || msg.key.participant || msg.key.remoteJid
-			if (db.data.datas.rowner.map(([number]) => number).map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(participant)) return
 			await this.reply(key.remoteJid, `@${participant.split`@`[0]} telah menghapus pesan\n*.off antidelete* untuk menonaktifkan`, msg, { mentions: [participant] })
 			return await this.copyNForward(key.remoteJid, msg).catch(e => console.log(e, msg))
 		}))
@@ -1330,17 +1361,15 @@ global.dfail = (type, m, conn) => {
 		rowner: `*「OWNERR BOT ONLY」*`,
 		owner: `*「OWNER BOT ONLY」*`,
 		mods: `*「DEV / MODS ONLY」*`,
-		premium: `*「PREMIUM USER ONLY」*`,
+		premium: `*「PREMIUM USER ONLY」*\n\n*Or Free to Use All Commands in the Group :*\n${db.data.datas.linkgc || 'https://chat.whatsapp.com/EzxQmm6lU7206XIMZ32wqs'}\n\nOtherwise type this : *.privatecmd*`,
 		group: `*「GROUP ONLY」*`,
 		private: `*「PRIVATE CHAT ONLY」*`,
 		admin: `*「ADMIN GROUP ONLY」*`,
 		nsfw: `[ *NSFW GAK AKTIF* ]`,
 		game: '```「 aktifkan mode game! 」```',
-		rpg: '```「 aktifkan mode rpg! 」```',
 		botAdmin: `*「BOT HARUS JADI ADMIN」*`,
 		unreg: 'Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*#daftar nama.umur*\n\nContoh: *#daftar Manusia.16*',
-		restrict: 'Fitur ini di *disable*!',
-		maintenance: '```「 feature maintenance! 」```'
+		restrict: 'Fitur ini di *disable*!'
 	}[type]
 	if (msg) return m.reply(msg)
 }
