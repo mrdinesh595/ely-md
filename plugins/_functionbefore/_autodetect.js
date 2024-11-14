@@ -12,7 +12,7 @@ export async function before(m) {
 		await this.reply(m.chat, `${edtr} mengubah Subject Grup menjadi :\n*${m.messageStubParameters[0]}*`, fkontak, { mentions: [m.sender] })
 	} else if (m.messageStubType == 22) {
 		await this.reply(m.chat, `${edtr} telah mengubah icon grup.`, fkontak, { mentions: [m.sender] })
-	} else if (m.messageStubType == 1 || m.messageStubType == 23 || m.messageStubType == 132) {
+	} else if (m.messageStubType == 23) {
 		await this.reply(m.chat, `${edtr} *mereset* link grup!`, fkontak, { mentions: [m.sender] })
 	} else if (m.messageStubType == 24) {
 		await this.reply(m.chat, `${edtr} mengubah deskripsi grup.\n\n${m.messageStubParameters[0]}`, fkontak, { mentions: [m.sender] })
@@ -35,7 +35,7 @@ export async function before(m) {
 	} else if (m.messageStubType == 145) {
 		const ms = /on/.test(m.messageStubParameters[0])
 		await this.reply(m.chat, `${edtr} *${ms ? 'mengaktifkan' : 'menonaktifkan'}* 'MEMBERSHIP_JOIN_APPROVAL_MODE'.`, fkontak, { mentions: [m.sender] })
-	}else if (m.messageStubType == 32 || m.messageStubType == 27) {
+	} else if (m.messageStubType == 32 || m.messageStubType == 27) {
 		if (process.uptime() < 300) return !1 // won't respond in 5 minutes (60x5), avoid spam while LoadMessages
 		let add = m.messageStubType == 27 ? true : false
 		let user = m.messageStubParameters[0]
@@ -43,10 +43,10 @@ export async function before(m) {
 		let chat = db.data.chats[id]
 		if (!chat.welcome) return !1
 		let meta = await Connection.store.fetchGroupMetadata(id, this.groupMetadata)
-		let bg = `https://raw.githubusercontent.com/arasea2/elydb/main/ely/media/picbot/menus/menus_${padLead(ranNumb(43), 3)}.jpg`
+		let bg = `https://raw.githubusercontent.com/clicknetcafe/Databasee/main/azamibot/media/picbot/menus/menus_${padLead(ranNumb(43), 3)}.jpg`
 		let name = await this.getName(user)
 		let namegc = await this.getName(id)
-		let ava_cont = 'https://raw.githubusercontent.com/arasea2/elydb/main/ely/media/avatar_contact.jpg'
+		let ava_cont = 'https://raw.githubusercontent.com/clicknetcafe/Databasee/main/azamibot/media/avatar_contact.jpg'
 		let pp = await this.profilePictureUrl(user, 'image').catch(_ => ava_cont)
 		let ppgc = await this.profilePictureUrl(id, 'image').catch(_ => ava_cont)
 		let text = (add ? (chat.sWelcome || this.welcome || Connection.conn.welcome || 'Welcome, @user!').replace('@subject', namegc).replace('@desc', chat.isBanned ? `${chat.lastmute > 0 ? `Bot sedang di mute selama :\n${(chat.mutecd - (new Date - chat.lastmute)).toTimeString()}` : `Bot lagi dalam mode nyimak ya, tunggu ownernya nyalain.`}` : (meta.desc?.toString() || '~')) : (chat.sBye || this.bye || Connection.conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
@@ -66,11 +66,7 @@ export async function before(m) {
 			console.log(e)
 			let ana = await uploadImage(await got(pp).buffer())
 			let anu = await uploadImage(await got(ppgc).buffer())
-			try {
-				await this.sendMsg(id, { image: { url: `https://aemt.uk.to/${add ? 'welcome' : 'goodbye'}?name=${name}&gcname=${namegc}&ppgc=${anu}&member=${meta.participants.length}&pp=${ana}&bg=${bg}` }, caption: text, mentions: [user] }, { quoted: fkontak })
-			} catch {
-				await this.sendMsg(id, { image: { url: `https://api.lolhuman.xyz/api/base/${add ? 'welcome' : 'leave'}?apikey=${api.lol}&img1=${ana}&img2=${anu}&background=${bg}&username=${name}&member=${meta.participants.length}&groupname=${namegc}` }, caption: text, mentions: [user] }, { quoted: fkontak }).catch(_ => this.reply(id, text, fkontak, { mentions: [user] }))
-			}
+			await this.sendMsg(id, { image: { url: `https://widipe.com/${add ? 'welcome' : 'goodbye'}?name=${name}&gcname=${namegc}&ppgc=${anu}&member=${meta.participants.length}&pp=${ana}&bg=${bg}` }, caption: text, mentions: [user] }, { quoted: fkontak }).catch(_ => this.reply(id, text, fkontak, { mentions: [user] }))
 		}
 	} else {
 		console.log({
