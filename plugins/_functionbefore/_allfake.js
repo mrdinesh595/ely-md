@@ -50,6 +50,23 @@ handler.all = async function (m) {
 		},
 		...extras
 	}
+	// externalAdReply atau text with thumbnail.
+	global.adReply = {
+		contextInfo: {
+			mentionedJid: [m.sender],
+			forwardingScore: 9999,
+			externalAdReply: {
+				showAdAttribution: true,
+				title: global.ucapan,
+				body: '® Ely-MD By Arasea',
+				mediaUrl: db.data.datas.linkgc,
+				description: '® Ely-MD By Arasea',
+				previewType: "PHOTO",
+				thumbnailUrl: 'https://raw.githubusercontent.com/arasea2/elydb/main/ely/pp.jpg',
+				sourceUrl: 'https://trakteer.id/arasea',
+			}
+		}
+	}
 	// fake video
 	global.fvid = {
 		key, message: {
