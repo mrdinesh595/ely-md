@@ -15,20 +15,18 @@ let tags = {
 	'primbon': '🎆 *PRIMBON*',
 	'creator': '🖱💻 *CREATOR*',
 	'tools': '✏️ *TOOLS MENU*',
-	'tempmail': '✉️ *TEMPMAIL*'
 }
-
 const defaultMenu = {
 	before: `
 ╔═══ *「 %me 」* 
+║
 ║⧐ ⸨ *.owner* ⸩
 ║⧐ ⸨ *.info* ⸩
 ║⧐ ⸨ *.levelup* ⸩
-║⧐ ⸨ *.claimlimit* ⸩
-╠════════════❍
+╠═════════════════❍
 ║⧐ 📈 Runtime : *%uptime*
 ║⧐ 📈 OS Uptime : *%osuptime*
-╚════════════════
+╚═════════════════════
 
 ╭───「 *PROFILMU* 」
 ├ • Nama  : %name!
@@ -42,7 +40,7 @@ const defaultMenu = {
 let handler = async (m, { conn, usedPrefix: _p, __dirname, command, isPrems }) => {
 	try {
 		let meh = padLead(ranNumb(43), 3)
-		let nais = `https://raw.githubusercontent.com/arasea2/elydb/main/ely/media/picbot/menus/menus_${meh}.jpg`
+		let nais = `https://raw.githubusercontent.com/clicknetcafe/Databasee/main/azamibot/media/picbot/menus/menus_${meh}.jpg`
 		let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
 		let { limit, role, level, exp, maxexp, money, totalexp } = db.data.users[m.sender]
 		let { min, xp, max } = xpRange(level, global.multiplier)
@@ -95,26 +93,25 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname, command, isPrems }) =
 		}
 		text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 		//list button not shown on ios
-		if (!/all/.test(command) && await getDevice(m.key.id) == 'android') {
+		/*if (!/all/.test(command) && await getDevice(m.key.id) == 'android') {
 			const txtList = `⦿ 🧱 Limit : *${isPrems ? '~ Infinity ~' : limit}*\n⦿ 🦸🏼‍♂️ Role : *${role}*\n⦿ 🔼 Level : *${level}* (${exp - min} / ${xp})\n⦿ 💵 Money : *${money}*\n⦿ 💫 Total XP : ${exp} ✨\n\n⦿ 📊 Database : ${Object.keys(db.data.users).length} User\n⦿ 📈 Runtime : *${uptime}*`
 			const sections = [
 				[
 					'━ ━ ━ ━ 『 MAIN 』 ━ ━ ━ ━', [
+						['📁 Source Code', '.sc', 'Original Base'],
 						['🎫 OWNER', '.owner', 'Chat P tidak dibalas'],
-						['⚡ DONASI', '.donasi', 'Donasi, Premium'],
-						['🌌 LIMIT', '.claimlimit', 'Claim Daily Limit']
-				], 'Owner Bot'], [
+						['⚡ PREMIUM', '.sewa', 'Premium, Sewabot, Jadibot, Jasa Run Bot']
+				], 'Free Bot'], [
 					'━ ━ ━ ━ 『 SUB MENU 』 ━ ━ ━ ━', [
 						['🤖 A.I', '.mai', '● AI and problem-solving'],
 						['🎪 ALL MENU', '.allmenu', '● Menampilkan Semua Menu'],
-						// ['🪙 STORE', '.mstore', '🛒 Bot Store : List Items'],
+						['🪙 STORE', '.mstore', '🛒 Bot Store : List Items'],
 						['🪷 OWNER', '.mowner', '◉ Owner, ROwner, Mods Privilages'],
 						['🎎 ANIME', '.manime', '◉ Cari Manga, Anime, Random Pic'],
 						['⌛ DOWNLOAD', '.mdownload', '◎ Youtube, Facebook, Tiktok, Dll...'],
 						['🎮 GAMES & FUN', '.mfun', '⊛ RPG, Kuis, Anonymous'],
-						['🗒️ TORAM ONLINE', '.mtoram', '⊛ Search Info for Toram Online'],
 						['🐳 GENSHIN IMPACT', '.mgenshin', '⊜ genshin.dev API'],
-						// ['🔞 NSFW', '.mnsfw', '◓ Fitur Afakah Ini ?'],
+						['🔞 NSFW', '.mnsfw', '◓ Fitur Afakah Ini ?'],
 						['👥 GROUP', '.mgroup', '◒ Command Dalam Grup'],
 						['🗺 EDITOR', '.meditor', 'ⓞ Kreasi Foto'],
 						['💫 EPHOTO 360', '.mephoto', '⦿ Edit Foto Kamu'],
@@ -122,8 +119,10 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname, command, isPrems }) =
 						['🎨 TEXT PRO ME', '.mtextpro', '◑ Kreasi Teks Efek'],
 				], 'Special Feature']
 			]
-			await conn.sendList(m.chat, 'Hello '+name, txtList, pauthor, 'LIST MENU', '', sections, m)
-		} else await conn.sendFThumb(m.chat, db.data.datas.maingroupname, text.trim(), nais, db.data.datas.linkgc, m)
+			await conn.sendList(m.chat, 'Hello '+name, txtList, pauthor, 'LIST MENU', nais, sections, m)
+			//await conn.sendList(m.chat, 'Hello '+name, txtList, pauthor, 'LIST MENU', nais, sections, m, [['neko', '.neko', 'quick_reply'], ['copy ini', 'https://cerdas.com', 'cta_copy'], ['owner', 'https://wa.me/6282337245566', 'cta_url']])
+		} else await conn.sendFThumb(m.chat, db.data.datas.maingroupname, text.trim(), nais, db.data.datas.linkgc, m)*/
+		await conn.sendFThumb(m.chat, db.data.datas.maingroupname, text.trim(), nais, db.data.datas.linkgc, m)
 	} catch (e) {
 		console.log(e)
 	}

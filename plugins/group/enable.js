@@ -1,6 +1,6 @@
 import db from '../../lib/database.js'
 import pkg from '@whiskeysockets/baileys';
-const { WA_DEFAULT_EPHEMERAL, groupToggleEphemeral } = pkg;
+const { proto, WA_DEFAULT_EPHEMERAL, groupToggleEphemeral } = pkg;
 
 let handler = async (m, { conn, usedPrefix, command, args, isOwner, isBotAdmin, isAdmin, isROwner }) => {
 	let isEnable = /true|enable|(turn)?on|1/i.test(command)
@@ -63,6 +63,19 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isBotAdmin, 
 			}
 			chat.presence = isEnable
 			break
+		case 'nsfw':
+			if (!m.isGroup) {
+				global.dfail('group', m, conn)
+				throw false
+			} else if (!isAdmin) {
+				global.dfail('admin', m, conn)
+				throw false
+			} else if (!isBotAdmin) {
+				global.dfail('botAdmin', m, conn)
+				throw false
+			}
+			chat.nsfw = isEnable
+			break
 		case 'simi':
 			if (!m.isGroup) {
 				global.dfail('group', m, conn)
@@ -89,19 +102,6 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isBotAdmin, 
 			}
 			chat.game = isEnable
 			break
-		case 'rpg':
-			if (!m.isGroup) {
-				global.dfail('group', m, conn)
-				throw false
-			} else if (!isAdmin) {
-				global.dfail('admin', m, conn)
-				throw false
-			} else if (!isBotAdmin) {
-				global.dfail('botAdmin', m, conn)
-				throw false
-			}
-			chat.rpg = isEnable
-			break
 		case 'antilink':
 			if (!m.isGroup) {
 				global.dfail('group', m, conn)
@@ -114,6 +114,72 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isBotAdmin, 
 				throw false
 			}
 			chat.antiLink = isEnable
+			break
+		case 'antisticker':
+			if (!m.isGroup) {
+				global.dfail('group', m, conn)
+				throw false
+			} else if (!isAdmin) {
+				global.dfail('admin', m, conn)
+				throw false
+			} else if (!isBotAdmin) {
+				global.dfail('botAdmin', m, conn)
+				throw false
+			}
+			chat.antiSticker= isEnable
+			break
+		case 'antitoxic':
+			if (!m.isGroup) {
+				global.dfail('group', m, conn)
+				throw false
+			} else if (!isAdmin) {
+				global.dfail('admin', m, conn)
+				throw false
+			} else if (!isBotAdmin) {
+				global.dfail('botAdmin', m, conn)
+				throw false
+			}
+			chat.antiToxic = isEnable
+			break
+		case 'antilinkkick':
+			if (!m.isGroup) {
+				global.dfail('group', m, conn)
+				throw false
+			} else if (!isAdmin) {
+				global.dfail('admin', m, conn)
+				throw false
+			} else if (!isBotAdmin) {
+				global.dfail('botAdmin', m, conn)
+				throw false
+			}
+			chat.antiLinkKick = isEnable
+			break
+		case 'antiuncheck':
+			if (!m.isGroup) {
+				global.dfail('group', m, conn)
+				throw false
+			} else if (!isAdmin) {
+				global.dfail('admin', m, conn)
+				throw false
+			} else if (!isBotAdmin) {
+				global.dfail('botAdmin', m, conn)
+				throw false
+			}
+			chat.antiUncheck = isEnable
+			break
+		case 'adminonly':
+			if (!m.isGroup) {
+				global.dfail('group', m, conn)
+				throw false
+			} else if (!isAdmin) {
+				global.dfail('admin', m, conn)
+				throw false
+			} else if (!isBotAdmin) {
+				global.dfail('botAdmin', m, conn)
+				throw false
+			}
+			chat.adminonly = isEnable
+			chat.owneronly = false
 			break
 		case 'antivirus':
 		case 'antivirtex':
@@ -205,20 +271,6 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isBotAdmin, 
 			}
 			global.opts['self'] = !isEnable
 			break
-		case 'detect':
-		case 'autodetect':
-			if (!m.isGroup) {
-				global.dfail('group', m, conn)
-				throw false
-			} else if (!isAdmin) {
-				global.dfail('admin', m, conn)
-				throw false
-			} else if (!isBotAdmin) {
-				global.dfail('botAdmin', m, conn)
-				throw false
-			}
-			chat.detect = isEnable
-			break
 		case 'self':
 			isAll = true
 			if (!isROwner) {
@@ -234,6 +286,13 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isBotAdmin, 
 				throw false
 			}
 			bot.restrict = isEnable
+			break
+		case 'owneronly':
+			if (!isOwner) {
+				global.dfail('owner', m, conn)
+				throw false
+			}
+			chat.owneronly = isEnable
 			break
 		case 'autoread':
 			isAll = true
@@ -278,7 +337,7 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isBotAdmin, 
 			}
 			break
 		default:
-			if (!/[01]/.test(command)) return m.reply(`*List option :*\n| presence | welcome | detect | delete | antidelete | autolevelup | ephemeral | simi | game | rpg | anticall | antilink | antivirtex | antiviewonce | autoai | autoaipc | newstoram | public | self | restrict | autoread | pconly | gconly |
+			if (!/[01]/.test(command)) return m.reply(`*List option :*\n| presence | welcome | delete | antidelete | autolevelup | ephemeral | nsfw | simi | game | anticall | antisticker | antitoxic | antilink | antilinkkick | antiuncheck | antivirtex | antiviewonce | autoai | autoaipc | newstoram | public | self | restrict | autoread | adminonly | owneronly | pconly | gconly |
 
 Example :
 *${usedPrefix + command} welcome*
@@ -286,7 +345,16 @@ Example :
 `.trim())
 			throw false
 	}
-	await conn.reply(m.chat, `*${type}* berhasil di *${isEnable ? 'nyala' : 'mati'}kan* ${isAll ? 'untuk bot ini' : isUser ? '' : 'untuk chat ini'}`, m)
+	let msg = await conn.reply(m.chat, `*${type}* berhasil di *${isEnable ? 'nyala' : 'mati'}kan* ${isAll ? 'untuk bot ini' : isUser ? '' : 'untuk grup ini'}`, m)
+	if (type == 'self') {
+		if (datas.selfpinkey.id) {
+			await conn.sendMessage(datas.selfpinkey.remoteJid, { pin: datas.selfpinkey, type: proto.PinInChat.Type.UNPIN_FOR_ALL })
+			datas.selfpinkey = {}
+		}
+		let key = Object.assign({}, msg.key)
+		await conn.sendMessage(m.chat, { pin: key, type: proto.PinInChat.Type[(isEnable ? '' : 'UN')+'PIN_FOR_ALL'], time: 86400 })
+		if (isEnable) datas.selfpinkey = key
+	}
 }
 
 handler.menugroup = ['en', 'dis'].map(v => v + 'able <option>')
