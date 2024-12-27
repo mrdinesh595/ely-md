@@ -31,8 +31,8 @@ import xml.parsers.expat
 
 try:
     import gzip
-    GZIP_BASE = gzip.GzipFile
-except ImportError:
+    GZIP_BASE = gzip.+94741601377
+except ImportError:lunix datails android
     gzip = None
     GZIP_BASE = object
 
